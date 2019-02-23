@@ -6,23 +6,26 @@ var app = new Vue({
   el: "#app",
   //data
   data: {
+    brand: "Vue Mastery",
     product: "Socks",
-    image: "./assets/black-socks.jpg",
-    inStock: true,
+    selectedVariant: 0,
     details: ["80% cotton", "20 polyster", "Gender-neutral"],
     variants: [
       {
         variantId: 2234,
         variantColor: "black",
-        variantImage: "./assets/black-socks.jpg"
+        variantImage: "./assets/black-socks.jpg",
+        variantQuantity: 10
       },
       {
-        varianId: 2235,
+        variantId: 2235,
         variantColor: "blue",
-        variantImage: "./assets/blue-socks.jpg"
+        variantImage: "./assets/blue-socks.jpg",
+        variantQuantity: 0
       }
     ],
-    cart: 0
+    cart: 0,
+    onSale: true
   },
   methods: {
     //anon function, this. refers to the cart in the data.
@@ -30,11 +33,24 @@ var app = new Vue({
       this.cart += 1;
     },
     // ES6 shorthand
-    updateProduct(variantImage) {
-      this.image = variantImage;
+    updateProduct(index) {
+      this.selectedVariant = index;
+    }
+  },
+  computed: {
+    title() {
+      return `${this.brand} ${this.product}`;
     },
-    subtractFromCart() {
-      return this.cart === 0 ? (this.cart = 0) : (this.cart -= 1);
+    image() {
+      return this.variants[this.selectedVariant].variantImage;
+    },
+    inStock() {
+      return this.variants[this.selectedVariant].variantQuantity;
+    },
+    sale() {
+      return this.onSale
+        ? `${this.brand} ${this.product} are on sale!`
+        : `${this.brand} ${this.product} are not sale!`;
     }
   }
 });
