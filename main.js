@@ -7,32 +7,34 @@ var app = new Vue({
   //data
   data: {
     product: "Socks",
-    image: "./assets/unsplash-socks.jpg",
+    image: "./assets/black-socks.jpg",
     inStock: true,
     details: ["80% cotton", "20 polyster", "Gender-neutral"],
     variants: [
       {
         variantId: 2234,
-        variantColor: "green"
+        variantColor: "black",
+        variantImage: "./assets/black-socks.jpg"
       },
       {
         varianId: 2235,
-        variantColor: "blue"
+        variantColor: "blue",
+        variantImage: "./assets/blue-socks.jpg"
       }
     ],
-    sizes: [
-      {
-        sizeId: 1001,
-        sizeType: "small"
-      },
-      {
-        sizeId: 1002,
-        sizeType: "medium"
-      },
-      {
-        sizeId: 1003,
-        sizeType: "Large"
-      }
-    ]
+    cart: 0
+  },
+  methods: {
+    //anon function, this. refers to the cart in the data.
+    addToCart: function() {
+      this.cart += 1;
+    },
+    // ES6 shorthand
+    updateProduct(variantImage) {
+      this.image = variantImage;
+    },
+    subtractFromCart() {
+      return this.cart === 0 ? (this.cart = 0) : (this.cart -= 1);
+    }
   }
 });
